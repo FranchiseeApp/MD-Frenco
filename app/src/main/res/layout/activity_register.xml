@@ -121,15 +121,31 @@
         app:layout_constraintTop_toBottomOf="@id/tv_forget_pass" />
 
     <TextView
-        android:id="@+id/tv_not_have_acc"
-        android:layout_width="0dp"
+        android:id="@+id/tv_have_acc"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Have any account? Login here"
+        android:text="Have any account?"
+        app:layout_constraintEnd_toStartOf="@id/tv_login_here"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_login"
         android:layout_marginTop="24dp"
-        android:textAlignment="center"/>
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:textAlignment="textEnd"/>
+
+    <TextView
+        android:id="@+id/tv_login_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="7dp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:text="Login here"
+        android:clickable="true"
+        android:textColor="?attr/colorPrimary"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_have_acc"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <View
         android:id="@+id/line_left"
@@ -151,7 +167,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_not_have_acc"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_have_acc"/>
 
     <View
         android:id="@+id/line_right"

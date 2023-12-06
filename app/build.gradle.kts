@@ -54,4 +54,6 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
 
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

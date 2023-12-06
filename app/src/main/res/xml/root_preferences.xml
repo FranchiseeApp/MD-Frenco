@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="edit_account"
+        app:title="Edit Account"
+        app:icon="@drawable/baseline_edit_24" />
+    <ListPreference
+        app:entryValues="@array/language_value"
+        app:key="edit_language"
+        app:icon="@drawable/baseline_language_24"
+        app:title="Change language"
+        app:useSimpleSummaryProvider="true" />
+    <ListPreference
+        app:defaultValue="@string/pref_dark_follow_system"
+        app:entries="@array/dark_mode"
+        app:entryValues="@array/dark_mode_value"
+        app:key="@string/pref_key_dark"
+        app:icon="@drawable/baseline_mode_night_24"
+        app:title="@string/pref_dark_title"
+        app:useSimpleSummaryProvider="true" />
+
+    <SwitchPreference
+        app:key="@string/pref_key_notify"
+        app:icon="@drawable/baseline_notifications_24"
+        app:summary="@string/pref_notify_summary"
+        app:title="@string/pref_notify_name" />
+
+</PreferenceScreen>

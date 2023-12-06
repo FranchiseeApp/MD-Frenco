@@ -7,7 +7,7 @@
 
 
     <item
-        android:id="@+id/addPostActivity"
+        android:id="@+id/addFranchiseActivity"
         android:icon="@drawable/baseline_add_circle_24"
         android:title="" />
 

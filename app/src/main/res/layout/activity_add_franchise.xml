@@ -84,7 +84,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/choose_category"
-            style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
@@ -140,9 +140,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="Type Franchise"
-            app:layout_constraintEnd_toEndOf="@+id/tv_sec_wa"
             app:layout_constraintStart_toStartOf="@+id/tl_wa"
             app:layout_constraintTop_toBottomOf="@id/line1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:layout_constraintStart_toStartOf="@id/tv_sec_type"
+            app:layout_constraintTop_toBottomOf="@id/tv_sec_type"
+            app:layout_constraintEnd_toEndOf="@id/tl_wa"
+            tools:listitem="@layout/item_type_franchise_input"/>
 
         <Button
             android:id="@+id/btn_add_type"
@@ -153,7 +162,7 @@
             app:icon="@drawable/baseline_add_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_sec_type" />
+            app:layout_constraintTop_toBottomOf="@+id/rv_type" />
 
         <View
             android:id="@+id/line2"
@@ -184,13 +193,22 @@
             app:layout_constraintEnd_toEndOf="@+id/tl_wa"
             app:layout_constraintTop_toBottomOf="@+id/line2" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_image_franchise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            app:layout_constraintStart_toStartOf="@id/tv_sec_type"
+            app:layout_constraintTop_toBottomOf="@id/btn_add_img"
+            app:layout_constraintEnd_toEndOf="@id/tl_wa"/>
+
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Save"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_add_img"
+            app:layout_constraintTop_toBottomOf="@id/rv_image_franchise"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="7dp"/>

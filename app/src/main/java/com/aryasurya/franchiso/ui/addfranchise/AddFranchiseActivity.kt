@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -40,6 +41,10 @@ class AddFranchiseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddFranchiseBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val items = listOf("Food", "Drink")
+        val adapterCategory = ArrayAdapter(this@AddFranchiseActivity, R.layout.text_type_franchise, items)
+        binding.autoCompleteTextView.setAdapter(adapterCategory)
 
         // Inisialisasi RecyclerView dan adapter
         val layoutManager = LinearLayoutManager(this)

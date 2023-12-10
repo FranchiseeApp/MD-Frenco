@@ -72,7 +72,7 @@ class AddTypeActivity : AppCompatActivity() {
         val editedFacility = binding.tlFacility.editText?.text.toString()
         val editedPrice = binding.tlPrice.editText?.text.toString()
 
-        // Disini, Anda perlu membuat objek FranchiseItem baru dengan data yang sudah diedit
+        // membuat objek FranchiseItem baru dengan data yang sudah diedit
         return FranchiseItem(editedName, editedFacility, editedPrice)
     }
 

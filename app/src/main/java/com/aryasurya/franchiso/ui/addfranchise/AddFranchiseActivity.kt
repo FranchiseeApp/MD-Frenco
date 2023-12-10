@@ -1,16 +1,27 @@
 package com.aryasurya.franchiso.ui.addfranchise
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aryasurya.franchiso.R
 import com.aryasurya.franchiso.data.entity.FranchiseItem
 import com.aryasurya.franchiso.databinding.ActivityAddFranchiseBinding
 import com.aryasurya.franchiso.ui.addfranchise.addtype.AddTypeActivity
+import java.io.ByteArrayOutputStream
 
 class AddFranchiseActivity : AppCompatActivity() {
 
@@ -19,6 +30,11 @@ class AddFranchiseActivity : AppCompatActivity() {
     private val ADD_TYPE_REQUEST_CODE = 100
     private val EDIT_ITEM_REQUEST_CODE = 101
     private var editedItemPosition: Int = -1 // Untuk menyimpan posisi item yang diedit
+
+    private val REQUEST_IMAGE_PICK = 2
+    private val selectedImages = mutableListOf<Uri>()
+    private lateinit var imageAdapter: ImageAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,19 +59,76 @@ class AddFranchiseActivity : AppCompatActivity() {
             val intent = Intent(this, AddTypeActivity::class.java)
             startActivityForResult(intent, ADD_TYPE_REQUEST_CODE)
         }
+
+        imageAdapter = ImageAdapter(selectedImages)
+        binding.rvImageFranchise.adapter = imageAdapter
+
+        val imageLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvImageFranchise.layoutManager = imageLayoutManager
+
+        binding.btnAddImg.setOnClickListener {
+            showImagePickerDialog()
+        }
     }
+
+    private fun showImagePickerDialog() {
+        val options = arrayOf("Gallery", "Cancel")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Choose image from")
+
+        builder.setItems(options) { dialog, which ->
+            when (options[which]) {
+                "Gallery" -> pickImageFromGallery()
+                "Cancel" -> dialog.dismiss()
+            }
+        }
+        builder.show()
+    }
+
+    private fun pickImageFromGallery() {
+        val pickPhotoIntent = Intent(Intent.ACTION_GET_CONTENT)
+        pickPhotoIntent.type = "image/*"
+        pickPhotoIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // Memungkinkan pemilihan multiple image
+        startActivityForResult(Intent.createChooser(pickPhotoIntent, "Select Picture"), REQUEST_IMAGE_PICK)
+    }
+
+    private fun addImageToList(uri: Uri) {
+        selectedImages.add(uri)
+        val imageAdapter = ImageAdapter(selectedImages)
+        binding.rvImageFranchise.adapter = imageAdapter
+        imageAdapter.notifyDataSetChanged()
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == ADD_TYPE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.getParcelableExtra<FranchiseItem>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { newTypeItem ->
-                // Tambahkan item baru ke daftar dan perbarui RecyclerView
-                adapter.addItem(newTypeItem)
-            }
-        } else if (requestCode == EDIT_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            data?.getParcelableExtra<FranchiseItem>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { editedItem ->
-                // Perbarui item yang sudah diedit dalam daftar
-                adapter.updateItem(editedItemPosition, editedItem)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ADD_TYPE_REQUEST_CODE -> {
+                    data?.getParcelableExtra<FranchiseItem>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { newTypeItem ->
+                        adapter.addItem(newTypeItem)
+                    }
+                }
+                EDIT_ITEM_REQUEST_CODE -> {
+                    data?.getParcelableExtra<FranchiseItem>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { editedItem ->
+                        adapter.updateItem(editedItemPosition, editedItem)
+                    }
+                }
+                REQUEST_IMAGE_PICK -> {
+                    if (data?.clipData != null) {
+                        val clipData = data.clipData!!
+                        for (i in 0 until clipData.itemCount) {
+                            val imageUri = clipData.getItemAt(i).uri
+                            addImageToList(imageUri)
+                        }
+                    } else if (data?.data != null) {
+                        val imageUri = data.data
+                        imageUri?.let {
+                            addImageToList(it)
+                        }
+                    }
+                }
             }
         }
     }

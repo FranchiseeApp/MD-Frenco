@@ -5,6 +5,14 @@
     <string name="account">Account</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="registration_successful">Registration successful</string>
+    <string name="email_is_already_taken">Email is Already Taken</string>
+    <string name="fill_the_username">Fill the username</string>
+    <string name="invalid_email_address">Invalid email address</string>
+    <string name="minimal_8_character">Minimum 8 characters</string>
+    <string name="eror_text">Minimum 8 characters</string>
+    <string name="confirm_password_eror_text">Password not match</string>
+    <string name="input_confirm_password">Input confirm password</string>
 
     <!-- Night Mode Preferences -->
     <string name="pref_dark_title">Dark mode</string>

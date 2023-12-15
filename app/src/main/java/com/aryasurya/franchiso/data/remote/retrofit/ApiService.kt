@@ -1,7 +1,7 @@
 package com.aryasurya.franchiso.data.remote.retrofit
 
-import com.aryasurya.franchiso.data.pref.User
-import com.aryasurya.franchiso.data.remote.response.CreateUserResponse
+import com.aryasurya.franchiso.data.pref.LoginRequest
+import com.aryasurya.franchiso.data.pref.RegisterRequest
 import com.aryasurya.franchiso.data.remote.response.DetailStoriesResponse
 import com.aryasurya.franchiso.data.remote.response.FileUploadResponse
 import com.aryasurya.franchiso.data.remote.response.LoginResponse
@@ -22,15 +22,11 @@ interface ApiService {
 
     @POST("user/register")
     suspend fun createUser(
-        @Body user: User
+        @Body registerRequest: RegisterRequest
     ): RegisterFranchisorResponse
 
-    @FormUrlEncoded
-    @POST("login")
-    suspend fun login(
-        @Field("email") email: String,
-        @Field("password") string: String
-    ): LoginResponse
+    @POST("user/login")
+    suspend fun login(@Body request: LoginRequest): LoginResponse
 
 
     @Multipart

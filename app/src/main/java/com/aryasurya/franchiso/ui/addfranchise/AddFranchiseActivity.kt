@@ -1,28 +1,19 @@
 package com.aryasurya.franchiso.ui.addfranchise
 
-import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aryasurya.franchiso.R
-import com.aryasurya.franchiso.data.entity.FranchiseItem
+import com.aryasurya.franchiso.data.dataclass.FranchiseItem
 import com.aryasurya.franchiso.databinding.ActivityAddFranchiseBinding
 import com.aryasurya.franchiso.ui.addfranchise.addtype.AddTypeActivity
-import java.io.ByteArrayOutputStream
 
 class AddFranchiseActivity : AppCompatActivity() {
 

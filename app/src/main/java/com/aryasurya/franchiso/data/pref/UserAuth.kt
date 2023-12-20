@@ -3,7 +3,6 @@ package com.aryasurya.franchiso.data.pref
 data class RegisterRequest(
     val email: String,
     val name: String,
-    val username: String,
     val password: String,
     val role: String
 )

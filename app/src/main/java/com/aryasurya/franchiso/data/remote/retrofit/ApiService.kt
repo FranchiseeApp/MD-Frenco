@@ -4,13 +4,10 @@ import com.aryasurya.franchiso.data.pref.LoginRequest
 import com.aryasurya.franchiso.data.pref.RegisterRequest
 import com.aryasurya.franchiso.data.remote.response.DetailStoriesResponse
 import com.aryasurya.franchiso.data.remote.response.FileUploadResponse
-import com.aryasurya.franchiso.data.remote.response.LoginResponse
-import com.aryasurya.franchiso.data.remote.response.RegisterFranchisorResponse
+import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -20,13 +17,13 @@ import retrofit2.http.Path
 interface ApiService {
 
 
-    @POST("user/register")
+    @POST("users")
     suspend fun createUser(
         @Body registerRequest: RegisterRequest
-    ): RegisterFranchisorResponse
+    ): RegisterResponse
 
-    @POST("user/login")
-    suspend fun login(@Body request: LoginRequest): LoginResponse
+//    @POST("user/login")
+//    suspend fun login(@Body request: LoginRequest): LoginResponse
 
 
     @Multipart

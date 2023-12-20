@@ -5,9 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import com.aryasurya.franchiso.R
-import com.aryasurya.franchiso.data.entity.FranchiseItem
+import com.aryasurya.franchiso.data.dataclass.FranchiseItem
 import com.aryasurya.franchiso.databinding.ActivityAddTypeBinding
 
 class AddTypeActivity : AppCompatActivity() {

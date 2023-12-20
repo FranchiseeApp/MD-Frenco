@@ -7,8 +7,7 @@ import com.aryasurya.franchiso.data.remote.retrofit.ApiService
 import com.aryasurya.franchiso.data.pref.UserModel
 import com.aryasurya.franchiso.data.pref.UserPreference
 import com.aryasurya.franchiso.data.remote.response.ErrorResponse
-import com.aryasurya.franchiso.data.remote.response.LoginResponse
-import com.aryasurya.franchiso.data.remote.response.RegisterFranchisorResponse
+import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -32,11 +31,11 @@ class UserRepository private constructor(
     }
 
 
-    suspend fun createUser(email: String, name: String, username: String , password: String): Flow<Result<RegisterFranchisorResponse>> = flow {
+    suspend fun createUser(name: String, email: String, password: String): Flow<Result<RegisterResponse>> = flow {
         emit(Result.Loading)
         try {
             // Panggil metode createUser pada apiService
-            val registerRequest = RegisterRequest(email, name, username, password, "franchisor")
+            val registerRequest = RegisterRequest(name, email, password, "franchisor")
             val response = apiService.createUser(registerRequest)
             emit(Result.Success(response))
         } catch (t: Throwable) {
@@ -63,18 +62,18 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun login(username: String, password: String): Flow<Result<LoginResponse>> = flow {
-        emit(Result.Loading)
-        try {
-            // Panggil metode createUser pada apiService
-            val request = LoginRequest(username, password)
-            val response = apiService.login(request)
-            userPreference.saveSession(UserModel(response.data.name,response.data.appToken))
-            emit(Result.Success(response))
-        } catch (e: Exception) {
-            emit(Result.Error(e.message ?: "An error occurred"))
-        }
-    }
+//    suspend fun login(username: String, password: String): Flow<Result<LoginResponse>> = flow {
+//        emit(Result.Loading)
+//        try {
+//            // Panggil metode createUser pada apiService
+//            val request = LoginRequest(username, password)
+//            val response = apiService.login(request)
+//            userPreference.saveSession(UserModel(response.data.name,response.data.appToken))
+//            emit(Result.Success(response))
+//        } catch (e: Exception) {
+//            emit(Result.Error(e.message ?: "An error occurred"))
+//        }
+//    }
 
     companion object {
         @Volatile

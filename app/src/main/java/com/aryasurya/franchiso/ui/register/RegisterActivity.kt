@@ -63,32 +63,25 @@ class RegisterActivity : AppCompatActivity() {
         activeButton()
     }
     private fun activeButton() {
-        val username = binding.tiUsernameRegister
         val name = binding.tiNameRegister
         val email = binding.tiEmailRegister
         val password = binding.tiPasswordRegister
         val btnRegister = binding.btnRegister
 
         btnRegister.setOnClickListener {
-            val inputUsername = username.editText?.text.toString()
             val inputName = name.editText?.text.toString()
             val inputEmail = email.editText?.text.toString()
             val inputPassword = password.editText?.text.toString()
             val confirmPassword = binding.tiConfirmPasswordRegister.editText?.text.toString()
 
-            if (isUsernameValid(inputUsername) && isNameValid(inputName) && isEmailValid(inputEmail) && isPasswordValid(inputPassword) && confirmPassword.isNotEmpty()) {
-                viewModel.createUser(inputEmail, inputName, inputUsername, inputPassword)
+            if ( isNameValid(inputName) && isEmailValid(inputEmail) && isPasswordValid(inputPassword) && confirmPassword.isNotEmpty()) {
+                viewModel.createUser(inputEmail, inputName, inputPassword)
 
             }
             else {
-                username.isErrorEnabled = false
                 name.isErrorEnabled = false
                 email.isErrorEnabled = false
                 password.isErrorEnabled = false
-
-                if (!isUsernameValid(inputUsername)) {
-                    username.error = getString(R.string.fill_the_username)
-                }
 
                 if (!isNameValid(inputName)) {
                     name.error = "Fill the name"

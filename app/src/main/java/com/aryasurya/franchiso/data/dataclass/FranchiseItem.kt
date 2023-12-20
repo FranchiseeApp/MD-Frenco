@@ -1,4 +1,4 @@
-package com.aryasurya.franchiso.data.entity
+package com.aryasurya.franchiso.data.dataclass
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

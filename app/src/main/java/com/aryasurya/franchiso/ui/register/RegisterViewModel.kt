@@ -6,17 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aryasurya.franchiso.data.Result
 import com.aryasurya.franchiso.data.UserRepository
-import com.aryasurya.franchiso.data.remote.response.CreateUserResponse
-import com.aryasurya.franchiso.data.remote.response.RegisterFranchisorResponse
+import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val repository: UserRepository): ViewModel() {
-    private val _createUserResult = MutableLiveData<Result<RegisterFranchisorResponse>>()
-    val createUserResult: LiveData<Result<RegisterFranchisorResponse>> = _createUserResult
+    private val _createUserResult = MutableLiveData<Result<RegisterResponse>>()
+    val createUserResult: LiveData<Result<RegisterResponse>> = _createUserResult
 
-    fun createUser(email: String, name: String, username: String , password: String) {
+    fun createUser(email: String, name: String , password: String) {
         viewModelScope.launch {
-            repository.createUser(email, name, username , password).collect{ result ->
+            repository.createUser(email, name , password).collect{ result ->
                 _createUserResult.value = result
             }
         }

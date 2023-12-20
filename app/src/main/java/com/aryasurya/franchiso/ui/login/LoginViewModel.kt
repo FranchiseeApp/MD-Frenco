@@ -8,21 +8,20 @@ import androidx.lifecycle.viewModelScope
 import com.aryasurya.franchiso.data.Result
 import com.aryasurya.franchiso.data.UserRepository
 import com.aryasurya.franchiso.data.pref.UserModel
-import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: UserRepository): ViewModel() {
 
-    private val _loginResult = MutableLiveData<Result<LoginResponse>>()
-    val loginResult: LiveData<Result<LoginResponse>> = _loginResult
+//    private val _loginResult = MutableLiveData<Result<LoginResponse>>()
+//    val loginResult: LiveData<Result<LoginResponse>> = _loginResult
 
-    fun login(username: String, password: String) {
-        viewModelScope.launch {
-            repository.login(username, password).collect { result ->
-                _loginResult.value = result
-            }
-        }
-    }
+//    fun login(username: String, password: String) {
+//        viewModelScope.launch {
+//            repository.login(username, password).collect { result ->
+//                _loginResult.value = result
+//            }
+//        }
+//    }
 
     fun saveSession(user: UserModel) {
         viewModelScope.launch {

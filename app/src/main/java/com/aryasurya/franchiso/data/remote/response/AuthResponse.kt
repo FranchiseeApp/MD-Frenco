@@ -14,6 +14,18 @@ data class RegisterResponse(
 	val message: String
 )
 
+data class LoginResponse(
+
+	@field:SerializedName("data")
+	val data: Data,
+
+	@field:SerializedName("success")
+	val success: Boolean,
+
+	@field:SerializedName("message")
+	val message: String
+)
+
 data class Data(
 
 	@field:SerializedName("password")
@@ -32,5 +44,6 @@ data class Data(
 	val email: String,
 
 	@field:SerializedName("token")
-	val token: Any
+	val token: String
 )
+

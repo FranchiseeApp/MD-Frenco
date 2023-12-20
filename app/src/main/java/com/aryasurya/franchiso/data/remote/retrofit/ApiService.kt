@@ -4,6 +4,7 @@ import com.aryasurya.franchiso.data.pref.LoginRequest
 import com.aryasurya.franchiso.data.pref.RegisterRequest
 import com.aryasurya.franchiso.data.remote.response.DetailStoriesResponse
 import com.aryasurya.franchiso.data.remote.response.FileUploadResponse
+import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -22,8 +23,8 @@ interface ApiService {
         @Body registerRequest: RegisterRequest
     ): RegisterResponse
 
-//    @POST("user/login")
-//    suspend fun login(@Body request: LoginRequest): LoginResponse
+    @POST("users/login")
+    suspend fun login(@Body request: LoginRequest): LoginResponse
 
 
     @Multipart

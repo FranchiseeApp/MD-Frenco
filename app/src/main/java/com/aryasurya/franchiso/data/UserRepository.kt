@@ -7,6 +7,7 @@ import com.aryasurya.franchiso.data.remote.retrofit.ApiService
 import com.aryasurya.franchiso.data.pref.UserModel
 import com.aryasurya.franchiso.data.pref.UserPreference
 import com.aryasurya.franchiso.data.remote.response.ErrorResponse
+import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.Flow
@@ -62,18 +63,18 @@ class UserRepository private constructor(
         }
     }
 
-//    suspend fun login(username: String, password: String): Flow<Result<LoginResponse>> = flow {
-//        emit(Result.Loading)
-//        try {
-//            // Panggil metode createUser pada apiService
-//            val request = LoginRequest(username, password)
-//            val response = apiService.login(request)
-//            userPreference.saveSession(UserModel(response.data.name,response.data.appToken))
-//            emit(Result.Success(response))
-//        } catch (e: Exception) {
-//            emit(Result.Error(e.message ?: "An error occurred"))
-//        }
-//    }
+    suspend fun login(email: String, password: String): Flow<Result<LoginResponse>> = flow {
+        emit(Result.Loading)
+        try {
+            // Panggil metode createUser pada apiService
+            val request = LoginRequest(email, password)
+            val response = apiService.login(request)
+//            userPreference.saveSession(UserModel(response.data.name, response.data.token))
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message ?: "An error occurred"))
+        }
+    }
 
     companion object {
         @Volatile

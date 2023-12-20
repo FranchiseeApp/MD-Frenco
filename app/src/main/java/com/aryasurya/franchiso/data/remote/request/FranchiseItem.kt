@@ -1,4 +1,4 @@
-package com.aryasurya.franchiso.data.dataclass
+package com.aryasurya.franchiso.data.remote.request
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

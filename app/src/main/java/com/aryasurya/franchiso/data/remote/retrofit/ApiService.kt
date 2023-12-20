@@ -1,7 +1,7 @@
 package com.aryasurya.franchiso.data.remote.retrofit
 
-import com.aryasurya.franchiso.data.pref.LoginRequest
-import com.aryasurya.franchiso.data.pref.RegisterRequest
+import com.aryasurya.franchiso.data.remote.request.LoginRequest
+import com.aryasurya.franchiso.data.remote.request.RegisterRequest
 import com.aryasurya.franchiso.data.remote.response.DetailStoriesResponse
 import com.aryasurya.franchiso.data.remote.response.FileUploadResponse
 import com.aryasurya.franchiso.data.remote.response.LoginResponse

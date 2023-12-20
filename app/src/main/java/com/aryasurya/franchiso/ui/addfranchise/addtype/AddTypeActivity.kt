@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import com.aryasurya.franchiso.R
-import com.aryasurya.franchiso.data.dataclass.FranchiseItem
+import com.aryasurya.franchiso.data.remote.request.FranchiseItem
 import com.aryasurya.franchiso.databinding.ActivityAddTypeBinding
 
 class AddTypeActivity : AppCompatActivity() {
@@ -18,7 +18,13 @@ class AddTypeActivity : AppCompatActivity() {
         binding = ActivityAddTypeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val items = listOf("Store", "Stand", "Mini market")
+        val items = listOf(
+            "Stand",
+            "Store",
+            "Kios",
+            "Outlet",
+            "Resto",
+            "Mini market")
         val adapter = ArrayAdapter(this@AddTypeActivity, R.layout.text_type_franchise, items)
         binding.autoCompleteTextView.setAdapter(adapter)
 
@@ -39,23 +45,6 @@ class AddTypeActivity : AppCompatActivity() {
             saveEditedItem() // Panggil fungsi saveEditedItem() saat tombol "Save" ditekan
         }
     }
-
-//    private fun saveType() {
-//        val type = binding.autoCompleteTextView.text.toString().trim()
-//        val facility = binding.tlFacility.editText?.text.toString().trim()
-//        val price = binding.tlPrice.editText?.text.toString().trim()
-//
-//        if (type.isNotEmpty() && facility.isNotEmpty() && price.isNotEmpty()) {
-//            val newTypeItem = FranchiseItem(type, facility, price)
-//            val resultIntent = Intent()
-//            resultIntent.putExtra(EXTRA_TYPE_ITEM, newTypeItem)
-//            setResult(Activity.RESULT_OK, resultIntent)
-//            finish()
-//        } else {
-//            // Handle when fields are empty
-//            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-//        }
-//    }
 
     private fun saveEditedItem() {
         val editedType = createEditedType() // Mendapatkan data yang sudah diedit dari input fields

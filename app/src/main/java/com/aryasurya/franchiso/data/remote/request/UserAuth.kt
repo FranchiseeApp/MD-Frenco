@@ -1,4 +1,4 @@
-package com.aryasurya.franchiso.data.pref
+package com.aryasurya.franchiso.data.remote.request
 
 data class RegisterRequest(
     val email: String,

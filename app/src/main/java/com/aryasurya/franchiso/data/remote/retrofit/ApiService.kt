@@ -1,5 +1,6 @@
 package com.aryasurya.franchiso.data.remote.retrofit
 
+import com.aryasurya.franchiso.data.remote.request.FranchiseRequest
 import com.aryasurya.franchiso.data.remote.request.LoginRequest
 import com.aryasurya.franchiso.data.remote.request.RegisterRequest
 import com.aryasurya.franchiso.data.remote.request.UpdateProfileRequest
@@ -8,6 +9,7 @@ import com.aryasurya.franchiso.data.remote.response.FileUploadResponse
 import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.aryasurya.franchiso.data.remote.response.UpdateResponse
+import com.aryasurya.franchiso.data.remote.response.UploadFranchiseResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -36,6 +38,11 @@ interface ApiService {
         @Header("Authorization") authorization: String,
         @Body updateRequest: UpdateProfileRequest
     ): UpdateResponse
+
+    @POST("franchises")
+    suspend fun createFranchise(
+        @Body request: FranchiseRequest
+    ): UploadFranchiseResponse
 
     @Multipart
     @POST("stories")

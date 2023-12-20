@@ -3,15 +3,18 @@ package com.aryasurya.franchiso
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.aryasurya.franchiso.data.FranchiseRepository
 import com.aryasurya.franchiso.data.UserRepository
 import com.aryasurya.franchiso.di.Injection
 import com.aryasurya.franchiso.ui.account.AccountViewModel
+import com.aryasurya.franchiso.ui.addfranchise.AddFranchiseViewModel
 import com.aryasurya.franchiso.ui.editprofile.EditProfileViewModel
 import com.aryasurya.franchiso.ui.login.LoginViewModel
 import com.aryasurya.franchiso.ui.register.RegisterViewModel
 
 class ViewModelFactory(
     private val repository: UserRepository,
+    private val repositoryFranchise: FranchiseRepository,
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -28,6 +31,9 @@ class ViewModelFactory(
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
                 EditProfileViewModel(repository) as T
             }
+            modelClass.isAssignableFrom(AddFranchiseViewModel::class.java) -> {
+                AddFranchiseViewModel(repositoryFranchise) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
         }
     }
@@ -41,6 +47,7 @@ class ViewModelFactory(
             INSTANCE ?: synchronized(this) {
                 INSTANCE ?: ViewModelFactory(
                     Injection.provideRepository(context) ,
+                    Injection.provideRepositoryFranchise(context) ,
                 )
             }.also { INSTANCE = it }
     }

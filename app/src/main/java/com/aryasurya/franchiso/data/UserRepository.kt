@@ -9,7 +9,6 @@ import com.aryasurya.franchiso.data.remote.request.UpdateProfileRequest
 import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.aryasurya.franchiso.data.remote.response.UpdateResponse
-import com.aryasurya.franchiso.data.remote.retrofit.ApiConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

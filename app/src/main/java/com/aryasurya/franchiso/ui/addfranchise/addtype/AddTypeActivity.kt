@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import com.aryasurya.franchiso.R
-import com.aryasurya.franchiso.data.remote.request.FranchiseItem
+import com.aryasurya.franchiso.data.remote.request.FranchiseTypeRequest
 import com.aryasurya.franchiso.databinding.ActivityAddTypeBinding
 
 class AddTypeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddTypeBinding
-    private var editedItem: FranchiseItem? = null
+    private var editedItem: FranchiseTypeRequest? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddTypeBinding.inflate(layoutInflater)
@@ -36,7 +36,7 @@ class AddTypeActivity : AppCompatActivity() {
 
         // Jika ada item yang akan diedit, tampilkan datanya di input fields
         editedItem?.let { item ->
-            binding.autoCompleteTextView.setText(item.type)
+            binding.autoCompleteTextView.setText(item.franchise_type)
             binding.tlFacility.editText?.setText(item.facility)
             binding.tlPrice.editText?.setText(item.price)
         }
@@ -55,13 +55,13 @@ class AddTypeActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun createEditedType(): FranchiseItem {
+    private fun createEditedType(): FranchiseTypeRequest {
         val editedName = binding.autoCompleteTextView.text.toString()
         val editedFacility = binding.tlFacility.editText?.text.toString()
         val editedPrice = binding.tlPrice.editText?.text.toString()
 
         // membuat objek FranchiseItem baru dengan data yang sudah diedit
-        return FranchiseItem(editedName, editedFacility, editedPrice)
+        return FranchiseTypeRequest(editedName, editedFacility, editedPrice)
     }
 
     companion object {

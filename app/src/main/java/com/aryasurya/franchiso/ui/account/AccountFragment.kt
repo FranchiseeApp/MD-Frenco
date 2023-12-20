@@ -2,6 +2,7 @@ package com.aryasurya.franchiso.ui.account
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,8 @@ class AccountFragment : Fragment() {
         photoProfile = binding.ivProfile
 
         viewModel.getSession().observe(requireActivity()) { user ->
-            binding.tvNameProfile.text = user.name
+            Log.d(TAG, "onViewCreated: $user")
+            binding.tvNameProfile.text = user.role
         }
 
     }

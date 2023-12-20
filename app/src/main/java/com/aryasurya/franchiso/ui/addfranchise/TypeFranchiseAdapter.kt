@@ -3,19 +3,19 @@ package com.aryasurya.franchiso.ui.addfranchise
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.aryasurya.franchiso.data.remote.request.FranchiseItem
+import com.aryasurya.franchiso.data.remote.request.FranchiseTypeRequest
 import com.aryasurya.franchiso.databinding.ItemTypeFranchiseInputBinding
 
 
 class TypeFranchiseAdapter(
-    private val items: MutableList<FranchiseItem>,
+    private val items: MutableList<FranchiseTypeRequest>,
     private val onItemClick: (Int) -> Unit,
     private val onDeleteClick: (Int) -> Unit
 ) : RecyclerView.Adapter<TypeFranchiseAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemTypeFranchiseInputBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: FranchiseItem) {
-            binding.inputTypeFranchise.text = item.type
+        fun bind(item: FranchiseTypeRequest) {
+            binding.inputTypeFranchise.text = item.franchise_type
             binding.inputFacilityFranchise.text = item.facility
             binding.inputPriceFranchise.text = item.price
 
@@ -38,12 +38,12 @@ class TypeFranchiseAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    fun addItem(item: FranchiseItem) {
+    fun addItem(item: FranchiseTypeRequest) {
         items.add(item)
         notifyItemInserted(items.size - 1)
     }
 
-    fun updateItem(position: Int, item: FranchiseItem) {
+    fun updateItem(position: Int, item: FranchiseTypeRequest) {
         if (position != RecyclerView.NO_POSITION) {
             items[position] = item
             notifyItemChanged(position)
@@ -58,10 +58,10 @@ class TypeFranchiseAdapter(
         }
     }
 
-    fun getItem(position: Int): FranchiseItem {
+    fun getItem(position: Int): FranchiseTypeRequest {
         return items[position]
     }
-    fun getItems(): List<FranchiseItem> {
+    fun getItems(): List<FranchiseTypeRequest> {
         return items.toList()
     }
 }

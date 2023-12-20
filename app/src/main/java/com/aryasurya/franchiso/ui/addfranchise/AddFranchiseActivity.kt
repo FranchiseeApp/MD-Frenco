@@ -14,11 +14,16 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aryasurya.franchiso.R
-import com.aryasurya.franchiso.data.remote.request.FranchiseItem
+import com.aryasurya.franchiso.ViewModelFactory
+import com.aryasurya.franchiso.data.Result
+import com.aryasurya.franchiso.data.remote.request.FranchiseRequest
+import com.aryasurya.franchiso.data.remote.request.FranchiseTypeRequest
 import com.aryasurya.franchiso.databinding.ActivityAddFranchiseBinding
 import com.aryasurya.franchiso.ui.addfranchise.addtype.AddTypeActivity
+import com.aryasurya.franchiso.ui.home.HomeFragment
 
 class AddFranchiseActivity : AppCompatActivity() {
 
@@ -33,6 +38,10 @@ class AddFranchiseActivity : AppCompatActivity() {
     private lateinit var imageAdapter: ImageAdapter
 
     private var franchiseId: String? = null
+
+    private val viewModel by viewModels<AddFranchiseViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,12 +100,51 @@ class AddFranchiseActivity : AppCompatActivity() {
             val franchiseDescription = binding.tlDesc.editText?.text.toString()
             val franchiseCategory = binding.autoCompleteTextView.text.toString()
             val franchisePhoneNumber = binding.tlWa.editText?.text.toString()
-
             // Dapatkan daftar tipe franchisenya dari adapter
             val franchiseTypes = adapter.getItems()
 
+            if (franchiseTypes.isNotEmpty()) {
+                val textColorPrimary = getColorFromAttribute(android.R.attr.textColorPrimary)
+                binding.tvSecType.setTextColor(textColorPrimary)
+
+                val newFranchise = FranchiseRequest(
+                    franchiseName,
+                    franchiseAddress,
+                    franchiseDescription,
+                    franchiseCategory,
+                    franchisePhoneNumber,
+                    franchiseTypes
+                )
+
+                viewModel.createFranchise(newFranchise)
+
+            } else {
+                binding.overlayLoading.visibility = View.GONE
+                binding.tvSecType.setTextColor(Color.RED)
+                Toast.makeText(this, "Please add at least one Franchise Type", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // ADD FRANCHISE OBS
+        viewModel.franchiseResult.observe(this) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.overlayLoading.visibility = View.VISIBLE
+                }
+
+                is Result.Success -> {
+                    binding.overlayLoading.visibility = View.GONE
+                    finish()
+                }
+
+                is Result.Error -> {
+
+                }
+            }
         }
     }
+
+
 
 
 
@@ -135,12 +183,12 @@ class AddFranchiseActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ADD_TYPE_REQUEST_CODE -> {
-                    data?.getParcelableExtra<FranchiseItem>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { newTypeItem ->
+                    data?.getParcelableExtra<FranchiseTypeRequest>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { newTypeItem ->
                         adapter.addItem(newTypeItem)
                     }
                 }
                 EDIT_ITEM_REQUEST_CODE -> {
-                    data?.getParcelableExtra<FranchiseItem>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { editedItem ->
+                    data?.getParcelableExtra<FranchiseTypeRequest>(AddTypeActivity.EXTRA_TYPE_ITEM)?.let { editedItem ->
                         adapter.updateItem(editedItemPosition, editedItem)
                     }
                 }

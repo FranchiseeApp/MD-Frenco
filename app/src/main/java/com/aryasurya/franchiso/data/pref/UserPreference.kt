@@ -66,9 +66,9 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val ROLE_KEY = stringPreferencesKey("role")
-        private val PHONE_KEY = stringPreferencesKey("role")
-        private val GENDER_KEY = stringPreferencesKey("role")
-        private val AVATAR_KEY = stringPreferencesKey("role")
+        private val PHONE_KEY = stringPreferencesKey("phone")
+        private val GENDER_KEY = stringPreferencesKey("gender")
+        private val AVATAR_KEY = stringPreferencesKey("avatar")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {

@@ -10,6 +10,7 @@ import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.aryasurya.franchiso.data.remote.response.UpdateResponse
 import com.aryasurya.franchiso.data.remote.response.UploadFranchiseResponse
+import com.aryasurya.franchiso.data.remote.response.UploadPhotoResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -43,6 +44,13 @@ interface ApiService {
     suspend fun createFranchise(
         @Body request: FranchiseRequest
     ): UploadFranchiseResponse
+
+    @Multipart
+    @POST("franchises/{id}/upload")
+    suspend fun uploadImages(
+        @Path("id") id: String,
+        @Part gallery: List<MultipartBody.Part>
+    ): UploadPhotoResponse
 
     @Multipart
     @POST("stories")

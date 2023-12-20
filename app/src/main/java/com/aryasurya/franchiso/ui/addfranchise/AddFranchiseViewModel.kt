@@ -12,9 +12,12 @@ import com.aryasurya.franchiso.data.pref.UserModel
 import com.aryasurya.franchiso.data.remote.request.FranchiseRequest
 import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.UploadFranchiseResponse
+import com.aryasurya.franchiso.data.remote.response.UploadPhotoResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class AddFranchiseViewModel(private val repository: FranchiseRepository): ViewModel() {
 
@@ -42,4 +45,29 @@ class AddFranchiseViewModel(private val repository: FranchiseRepository): ViewMo
             }
         }
     }
+
+    private val _uploadResult = MutableLiveData<Result<UploadPhotoResponse>>()
+    val uploadResult: LiveData<Result<UploadPhotoResponse>> = _uploadResult
+
+    fun uploadImages(id: String, imageParts: List<MultipartBody.Part>) {
+        viewModelScope.launch {
+            try {
+                val response = repository.uploadImages(id, imageParts)
+                _uploadResult.value = Result.Success(response)
+            } catch (e: Exception) {
+                _uploadResult.value = Result.Error(e.message ?: "An error occurred")
+            }
+
+        }
+    }
+
+//    fun uploadImages(id: String, imageParts: List<MultipartBody.Part>) {
+//        viewModelScope.launch {
+//            repository.uploadImages(id, imageParts).collect { result ->
+//                _uploadResult.value = result
+//            }
+//
+//        }
+//    }
+
 }

@@ -40,10 +40,7 @@ class LoginActivity : AppCompatActivity() {
             if (user.isLogin) {
                 val userName = user.role
                 Toast.makeText(this, "Welcome, $userName!", Toast.LENGTH_SHORT).show()
-
-                // Lanjut ke halaman utama
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                Log.d("Data User", "onCreate: $user")
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }

@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -24,6 +25,13 @@ import com.aryasurya.franchiso.data.remote.request.FranchiseTypeRequest
 import com.aryasurya.franchiso.databinding.ActivityAddFranchiseBinding
 import com.aryasurya.franchiso.ui.addfranchise.addtype.AddTypeActivity
 import com.aryasurya.franchiso.ui.home.HomeFragment
+import com.aryasurya.franchiso.utils.createCustomTempFile
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.io.FileOutputStream
 
 class AddFranchiseActivity : AppCompatActivity() {
 
@@ -35,9 +43,11 @@ class AddFranchiseActivity : AppCompatActivity() {
 
     private val REQUEST_IMAGE_PICK = 2
     private val selectedImages = mutableListOf<Uri>()
+    private val imageParts = mutableListOf<MultipartBody.Part>()
     private lateinit var imageAdapter: ImageAdapter
 
     private var franchiseId: String? = null
+
 
     private val viewModel by viewModels<AddFranchiseViewModel> {
         ViewModelFactory.getInstance(this)
@@ -133,8 +143,31 @@ class AddFranchiseActivity : AppCompatActivity() {
                 }
 
                 is Result.Success -> {
+                    val result = result.data.data
+                    val id = result.id.toString()
+                    franchiseId = id
+                    viewModel.uploadImages(id, imageParts)
+
+                }
+
+                is Result.Error -> {
                     binding.overlayLoading.visibility = View.GONE
+                    Toast.makeText(this, "Upload data franchise eror", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewModel.uploadResult.observe(this) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.overlayLoading.visibility = View.GONE
+                }
+
+                is Result.Success -> {
+                    binding.overlayLoading.visibility = View.GONE
+                    Toast.makeText(this, "Upload data Gambar successful", Toast.LENGTH_SHORT).show()
                     finish()
+
                 }
 
                 is Result.Error -> {
@@ -142,8 +175,8 @@ class AddFranchiseActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
+    }
 
 
 
@@ -169,12 +202,33 @@ class AddFranchiseActivity : AppCompatActivity() {
         startActivityForResult(Intent.createChooser(pickPhotoIntent, "Select Picture"), REQUEST_IMAGE_PICK)
     }
 
+    private fun convertImageUriToFile(uri: Uri, context: Context): File {
+        val contentResolver = context.contentResolver
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(uri, filePathColumn, null, null, null)
+        cursor?.moveToFirst()
+        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
+        val filePath = cursor?.getString(columnIndex ?: -1)
+        cursor?.close()
+        return File(filePath ?: "")
+    }
+    private fun convertFileToMultipart(file: File): MultipartBody.Part {
+        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        return MultipartBody.Part.createFormData("gallery", file.name, requestFile)
+    }
+
+
     private fun addImageToList(uri: Uri) {
+        val imageFile = convertImageUriToFile(uri, this)
+        val imagePart = convertFileToMultipart(imageFile)
+        imageParts.add(imagePart)
         selectedImages.add(uri)
         val imageAdapter = ImageAdapter(selectedImages)
         binding.rvImageFranchise.adapter = imageAdapter
         imageAdapter.notifyDataSetChanged()
     }
+
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -252,3 +306,4 @@ class AddFranchiseActivity : AppCompatActivity() {
         return typedValue.data
     }
 }
+

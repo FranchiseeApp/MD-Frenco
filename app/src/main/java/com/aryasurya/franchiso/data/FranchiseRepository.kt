@@ -2,10 +2,15 @@ package com.aryasurya.franchiso.data
 
 import com.aryasurya.franchiso.data.pref.UserPreference
 import com.aryasurya.franchiso.data.remote.request.FranchiseRequest
+import com.aryasurya.franchiso.data.remote.request.RegisterRequest
+import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.aryasurya.franchiso.data.remote.response.UploadFranchiseResponse
+import com.aryasurya.franchiso.data.remote.response.UploadPhotoResponse
 import com.aryasurya.franchiso.data.remote.retrofit.ApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import okhttp3.MultipartBody
 
 class FranchiseRepository constructor(
     private val apiService: ApiService,
@@ -32,6 +37,7 @@ class FranchiseRepository constructor(
 //    }
 
     suspend fun createFranchise(franchiseRequest: FranchiseRequest): UploadFranchiseResponse {
+//        val token = userPreference.getSession().first().token
         return try {
             apiService.createFranchise(franchiseRequest)
         } catch (e: Exception) {
@@ -39,6 +45,23 @@ class FranchiseRepository constructor(
         }
     }
 
+    suspend fun uploadImages(id: String, imageParts: List<MultipartBody.Part>): UploadPhotoResponse {
+        return try {
+            apiService.uploadImages(id, imageParts)
+        } catch (e: Exception) {
+            throw Exception(e.message ?: "An error occurred")
+        }
+    }
+
+//    suspend fun uploadImages(id: String, imageParts: List<MultipartBody.Part>): Flow<Result<UploadPhotoResponse>> = flow {
+//        emit(Result.Loading)
+//        try {
+//            val response = apiService.uploadImages(id, imageParts)
+//            Result.Success(response)
+//        } catch (e: Exception) {
+//            Result.Error(e.message ?: "An error occurred")
+//        }
+//    }
 
     companion object {
         @Volatile

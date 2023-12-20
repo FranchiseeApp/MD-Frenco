@@ -9,6 +9,7 @@ import com.aryasurya.franchiso.di.Injection
 import com.aryasurya.franchiso.ui.account.AccountViewModel
 import com.aryasurya.franchiso.ui.addfranchise.AddFranchiseViewModel
 import com.aryasurya.franchiso.ui.editprofile.EditProfileViewModel
+import com.aryasurya.franchiso.ui.home.HomeViewModel
 import com.aryasurya.franchiso.ui.login.LoginViewModel
 import com.aryasurya.franchiso.ui.register.RegisterViewModel
 
@@ -30,6 +31,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
                 EditProfileViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repositoryFranchise) as T
             }
             modelClass.isAssignableFrom(AddFranchiseViewModel::class.java) -> {
                 AddFranchiseViewModel(repositoryFranchise) as T

@@ -1,8 +1,11 @@
 package com.aryasurya.franchiso.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.aryasurya.franchiso.data.pref.UserPreference
 import com.aryasurya.franchiso.data.remote.request.FranchiseRequest
 import com.aryasurya.franchiso.data.remote.request.RegisterRequest
+import com.aryasurya.franchiso.data.remote.response.GetMyFranchiseResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.aryasurya.franchiso.data.remote.response.UploadFranchiseResponse
 import com.aryasurya.franchiso.data.remote.response.UploadPhotoResponse
@@ -37,19 +40,30 @@ class FranchiseRepository constructor(
 //    }
 
     suspend fun createFranchise(franchiseRequest: FranchiseRequest): UploadFranchiseResponse {
-//        val token = userPreference.getSession().first().token
+        val token = userPreference.getSession().first().token
         return try {
-            apiService.createFranchise(franchiseRequest)
+            apiService.createFranchise(token, franchiseRequest)
         } catch (e: Exception) {
             throw Exception("Failed to create franchise: ${e.message}")
         }
     }
 
     suspend fun uploadImages(id: String, imageParts: List<MultipartBody.Part>): UploadPhotoResponse {
+        val token = userPreference.getSession().first().token
         return try {
-            apiService.uploadImages(id, imageParts)
+            apiService.uploadImages(token, id, imageParts)
         } catch (e: Exception) {
             throw Exception(e.message ?: "An error occurred")
+        }
+    }
+
+    fun getMyFranchise(): LiveData<Result<List<GetMyFranchiseResponse>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getMyFranchises()
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message ?: "An error occurred"))
         }
     }
 

@@ -4,15 +4,13 @@ import com.aryasurya.franchiso.data.remote.request.FranchiseRequest
 import com.aryasurya.franchiso.data.remote.request.LoginRequest
 import com.aryasurya.franchiso.data.remote.request.RegisterRequest
 import com.aryasurya.franchiso.data.remote.request.UpdateProfileRequest
-import com.aryasurya.franchiso.data.remote.response.DetailStoriesResponse
-import com.aryasurya.franchiso.data.remote.response.FileUploadResponse
+import com.aryasurya.franchiso.data.remote.response.GetMyFranchiseResponse
 import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
 import com.aryasurya.franchiso.data.remote.response.UpdateResponse
 import com.aryasurya.franchiso.data.remote.response.UploadFranchiseResponse
 import com.aryasurya.franchiso.data.remote.response.UploadPhotoResponse
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -42,28 +40,19 @@ interface ApiService {
 
     @POST("franchises")
     suspend fun createFranchise(
+        @Header("Authorization") authorization: String,
         @Body request: FranchiseRequest
     ): UploadFranchiseResponse
 
     @Multipart
     @POST("franchises/{id}/upload")
     suspend fun uploadImages(
+        @Header("Authorization") authorization: String,
         @Path("id") id: String,
         @Part gallery: List<MultipartBody.Part>
     ): UploadPhotoResponse
 
-    @Multipart
-    @POST("stories")
-    suspend fun postStory(
-        @Part file: MultipartBody.Part ,
-        @Part("description") description: RequestBody ,
-        @Part("lat") lat: Double ,
-        @Part("lon") lon: Double ,
-    ): FileUploadResponse
-
-    @GET("stories/{id}")
-    suspend fun getDetailStory(
-        @Path("id") id: String
-    ): DetailStoriesResponse
+    @GET("my_franchises")
+    suspend fun getMyFranchises(): List<GetMyFranchiseResponse>
 
 }

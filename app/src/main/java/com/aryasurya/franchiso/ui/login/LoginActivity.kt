@@ -36,16 +36,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
 
-        viewModel.getSession().observe(this) { user ->
-            if (user.isLogin) {
-                val userName = user.role
-                Toast.makeText(this, "Welcome, $userName!", Toast.LENGTH_SHORT).show()
-                Log.d("Data User", "onCreate: $user")
-                startActivity(Intent(this, MainActivity::class.java))
-                finish()
-            }
-        }
-
         viewModel.loginResult.observe(this) { result ->
             when(result) {
                 is Result.Loading -> {

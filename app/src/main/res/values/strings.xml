@@ -145,4 +145,5 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="list_image">List Image</string>
+    <string name="no_data">No Data</string>
 </resources>

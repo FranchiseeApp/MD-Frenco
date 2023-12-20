@@ -1,60 +1,102 @@
 package com.aryasurya.franchiso.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.aryasurya.franchiso.R
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.aryasurya.franchiso.ViewModelFactory
+import com.aryasurya.franchiso.data.Result
+import com.aryasurya.franchiso.data.remote.response.GetMyFranchiseResponse
+import com.aryasurya.franchiso.databinding.FragmentHomeBinding
+import com.aryasurya.franchiso.ui.login.LoginActivity
+import com.aryasurya.franchiso.ui.login.LoginViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private lateinit var binding: FragmentHomeBinding
+    private val viewModel by viewModels<HomeViewModel> {
+        ViewModelFactory.getInstance(requireContext())
     }
+    private val userViewModel by viewModels<LoginViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
+    private lateinit var adapter: FranchiseAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        binding = FragmentHomeBinding.inflate(inflater , container , false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        userViewModel.getSession().observe(viewLifecycleOwner) { user ->
+            if (!user.isLogin) {
+                startActivity(Intent(requireContext(), LoginActivity::class.java))
             }
+        }
+
+        adapter = FranchiseAdapter(emptyList())
+        binding.rvListStory.adapter = adapter
+        binding.rvListStory.layoutManager = LinearLayoutManager(requireContext())
+
+
+
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+
+        // Tambahkan listener untuk refresh
+        swipeRefreshLayout.setOnRefreshListener {
+            // Panggil fungsi untuk memuat ulang data
+            loadData()
+        }
+
+        // ...
+
+        // Memuat data pertama kali ketika fragment dimuat
+        loadData()
+
     }
+    override fun onResume() {
+        super.onResume()
+        // Memuat data setiap kali fragment di-resume
+        loadData()
+    }
+
+    private fun loadData() {
+        viewModel.getMyFranchise().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    // Handle loading state
+                    binding.pbListFranchise.visibility = View.VISIBLE
+                }
+                is Result.Success -> {
+                    binding.pbListFranchise.visibility = View.GONE
+
+                    if (result.data.isNotEmpty()) {
+                        // Tampilkan data di RecyclerView
+                        adapter = FranchiseAdapter(result.data.first().data)
+                        binding.rvListStory.adapter = adapter
+                    } else {
+                        // Tampilkan pesan jika tidak ada data
+                        binding.tvNoData.visibility = View.VISIBLE
+                    }
+                }
+                is Result.Error -> {
+                    // Handle error state
+                    binding.pbListFranchise.visibility = View.GONE
+                }
+                else -> {}
+            }
+        }
+    }
+
 }

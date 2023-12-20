@@ -56,11 +56,11 @@ class UserRepository private constructor(
         }
     }
 
-    suspend fun updateProfile(name: String, email: String, password: String): Flow<Result<UpdateResponse>> = flow {
+    suspend fun updateProfile(name: String, email: String, password: String, phone: String, gender: String, avatar: String): Flow<Result<UpdateResponse>> = flow {
         emit(Result.Loading)
         val token = userPreference.getSession().first().token
         try {
-            val updateProfileRequest = UpdateProfileRequest(name, email, password, "franchisor")
+            val updateProfileRequest = UpdateProfileRequest(name, email, password, phone, gender, avatar, "franchisor")
             val response = apiService.updateUser("Bearer $token", updateProfileRequest)
             emit(Result.Success(response))
         } catch (e: Exception) {

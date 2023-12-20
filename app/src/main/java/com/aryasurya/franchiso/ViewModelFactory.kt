@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.aryasurya.franchiso.data.UserRepository
 import com.aryasurya.franchiso.di.Injection
 import com.aryasurya.franchiso.ui.account.AccountViewModel
+import com.aryasurya.franchiso.ui.editprofile.EditProfileViewModel
 import com.aryasurya.franchiso.ui.login.LoginViewModel
 import com.aryasurya.franchiso.ui.register.RegisterViewModel
 
@@ -23,6 +24,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(AccountViewModel::class.java) -> {
                 AccountViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(EditProfileViewModel::class.java) -> {
+                EditProfileViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel Class: " + modelClass.name)
         }

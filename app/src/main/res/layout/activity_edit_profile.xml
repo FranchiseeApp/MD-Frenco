@@ -59,20 +59,6 @@ tools:context=".ui.editprofile.EditProfileActivity">
                 app:strokeWidth="2dp"
                 app:strokeColor="?attr/colorOnSecondary" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_username_register"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:hint="@string/username"
-                android:enabled="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ti_email_register">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ti_name_register"
@@ -83,7 +69,7 @@ tools:context=".ui.editprofile.EditProfileActivity">
                 app:endIconMode="clear_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ti_username_register">
+                app:layout_constraintTop_toBottomOf="@id/ti_email_register">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -95,9 +81,8 @@ tools:context=".ui.editprofile.EditProfileActivity">
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/email"
-                android:enabled="false"
-                app:layout_constraintStart_toStartOf="@id/ti_username_register"
-                app:layout_constraintEnd_toEndOf="@id/ti_username_register"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_email_register"
@@ -113,13 +98,14 @@ tools:context=".ui.editprofile.EditProfileActivity">
                 android:layout_marginTop="8dp"
                 android:hint="@string/no_telephone"
                 app:endIconMode="clear_text"
-                app:layout_constraintStart_toStartOf="@id/ti_username_register"
-                app:layout_constraintEnd_toEndOf="@id/ti_username_register"
+                app:layout_constraintEnd_toEndOf="@+id/ti_name_register"
+                app:layout_constraintStart_toStartOf="@+id/ti_name_register"
                 app:layout_constraintTop_toBottomOf="@id/ti_name_register">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -142,11 +128,11 @@ tools:context=".ui.editprofile.EditProfileActivity">
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
-                android:text="@string/register"
+                android:text="@string/save"
                 style="@style/ButtonBackground"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

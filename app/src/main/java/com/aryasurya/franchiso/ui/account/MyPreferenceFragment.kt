@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.fragment.app.viewModels
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.aryasurya.franchiso.R
+import com.aryasurya.franchiso.ViewModelFactory
 import com.aryasurya.franchiso.ui.editprofile.EditProfileActivity
 import com.aryasurya.franchiso.ui.login.LoginActivity
 import com.aryasurya.franchiso.utils.DarkMode
@@ -15,6 +17,9 @@ import java.util.Locale
 
 class MyPreferenceFragment : PreferenceFragmentCompat() {
 
+    private val viewModel by viewModels<AccountViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
@@ -40,7 +45,7 @@ class MyPreferenceFragment : PreferenceFragmentCompat() {
             val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage(getString(R.string.are_you_sure_you_want_to_log_out))
             builder.setPositiveButton(getString(R.string.yes)) { dialog, _ ->
-//                sessionManager.clearSession()
+                viewModel.logout()
                 dialog.dismiss()
 
                 val intent = Intent(requireContext(), LoginActivity::class.java)

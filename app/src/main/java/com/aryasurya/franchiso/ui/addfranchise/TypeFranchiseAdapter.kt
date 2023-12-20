@@ -3,7 +3,7 @@ package com.aryasurya.franchiso.ui.addfranchise
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.aryasurya.franchiso.data.entity.FranchiseItem
+import com.aryasurya.franchiso.data.remote.request.FranchiseItem
 import com.aryasurya.franchiso.databinding.ItemTypeFranchiseInputBinding
 
 

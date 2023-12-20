@@ -1,7 +1,10 @@
 package com.aryasurya.franchiso.data.pref
 
 data class UserModel(
-    val username: String,
+    val id: Int,
+    val name: String,
+    val email: String,
     val token: String ,
+    val role: String,
     val isLogin: Boolean = false
 )

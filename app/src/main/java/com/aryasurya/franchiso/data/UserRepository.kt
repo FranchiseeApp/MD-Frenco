@@ -5,9 +5,13 @@ import com.aryasurya.franchiso.data.remote.request.RegisterRequest
 import com.aryasurya.franchiso.data.remote.retrofit.ApiService
 import com.aryasurya.franchiso.data.pref.UserModel
 import com.aryasurya.franchiso.data.pref.UserPreference
+import com.aryasurya.franchiso.data.remote.request.UpdateProfileRequest
 import com.aryasurya.franchiso.data.remote.response.LoginResponse
 import com.aryasurya.franchiso.data.remote.response.RegisterResponse
+import com.aryasurya.franchiso.data.remote.response.UpdateResponse
+import com.aryasurya.franchiso.data.remote.retrofit.ApiConfig
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class UserRepository private constructor(
@@ -51,6 +55,19 @@ class UserRepository private constructor(
             emit(Result.Error(e.message ?: "An error occurred"))
         }
     }
+
+    suspend fun updateProfile(name: String, email: String, password: String): Flow<Result<UpdateResponse>> = flow {
+        emit(Result.Loading)
+        val token = userPreference.getSession().first().token
+        try {
+            val updateProfileRequest = UpdateProfileRequest(name, email, password, "franchisor")
+            val response = apiService.updateUser("Bearer $token", updateProfileRequest)
+            emit(Result.Success(response))
+        } catch (e: Exception) {
+            emit(Result.Error(e.message ?: "An error occurred"))
+        }
+    }
+
 
     companion object {
         @Volatile

@@ -9,24 +9,27 @@
     <ImageView
         android:id="@+id/iv_banner"
         android:layout_width="0dp"
-        android:layout_height="175dp"
+        android:layout_height="220dp"
         android:scaleType="centerCrop"
         android:src="@drawable/banner_acc"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_profile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/foto_web"
+        android:src="@drawable/image_user_default"
         android:layout_marginTop="35dp"
         app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/iv_banner"
         app:layout_constraintBottom_toTopOf="@id/tv_name_profile"/>
+
 
     <TextView
         android:id="@+id/tv_name_profile"
@@ -34,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="47dp"
         android:maxLines="1"
-        android:text="I Kadek Arya Surya Saputra"
+        tools:text="I Kadek Arya Surya Saputra"
         android:textColor="@color/white"
         android:textSize="21sp"
         android:textStyle="bold"

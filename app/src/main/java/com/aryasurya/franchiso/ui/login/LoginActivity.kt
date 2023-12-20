@@ -54,7 +54,10 @@ class LoginActivity : AppCompatActivity() {
                 is Result.Success -> {
                     binding.overlayLoading.visibility = View.GONE
                     window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                    viewModel.saveSession(UserModel(result.data.data.name, result.data.data.token))
+                    result.data.data.apply {
+                        viewModel.saveSession(UserModel(id, name, email, token, role))
+                    }
+
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }

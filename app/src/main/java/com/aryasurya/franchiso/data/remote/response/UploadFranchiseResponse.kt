@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class UploadFranchiseResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem>,
+	val data: DataItem,
 
 	@field:SerializedName("success")
 	val success: Boolean,

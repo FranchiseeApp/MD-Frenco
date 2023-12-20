@@ -92,7 +92,7 @@ class AddFranchiseActivity : AppCompatActivity() {
         }
 
         binding.btnUploadDataFranchise.setOnClickListener {
-            binding.overlayLoading.visibility = View.VISIBLE
+//            binding.overlayLoading.visibility = View.VISIBLE
 
             // Panggil fungsi untuk mengumpulkan data dari inputan
             val franchiseName = binding.tlName.editText?.text.toString()
@@ -138,7 +138,7 @@ class AddFranchiseActivity : AppCompatActivity() {
                 }
 
                 is Result.Error -> {
-
+                    binding.overlayLoading.visibility = View.GONE
                 }
             }
         }

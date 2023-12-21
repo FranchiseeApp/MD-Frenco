@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: FranchiseRepository): ViewModel() {
 
-    fun getMyFranchise(): LiveData<Result<List<GetMyFranchiseResponse>>> {
+    fun getMyFranchise(): LiveData<Result<GetMyFranchiseResponse>> {
         return repository.getMyFranchise()
     }
 }

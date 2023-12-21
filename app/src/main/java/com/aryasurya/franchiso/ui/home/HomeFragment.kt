@@ -2,6 +2,7 @@ package com.aryasurya.franchiso.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -39,27 +40,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userViewModel.getSession().observe(viewLifecycleOwner) { user ->
-            if (!user.isLogin) {
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-            }
+        binding.rvListStory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+
+        userViewModel.getSession().observe(viewLifecycleOwner) {
+            Log.d("userIdLogin", "login: ${it.token}")
         }
-
-        adapter = FranchiseAdapter(emptyList())
-        binding.rvListStory.adapter = adapter
-        binding.rvListStory.layoutManager = LinearLayoutManager(requireContext())
-
-
-
-        val swipeRefreshLayout = binding.swipeRefreshLayout
-
-        // Tambahkan listener untuk refresh
-        swipeRefreshLayout.setOnRefreshListener {
-            // Panggil fungsi untuk memuat ulang data
-            loadData()
-        }
-
-        // ...
 
         // Memuat data pertama kali ketika fragment dimuat
         loadData()
@@ -81,13 +67,15 @@ class HomeFragment : Fragment() {
                 is Result.Success -> {
                     binding.pbListFranchise.visibility = View.GONE
 
-                    if (result.data.isNotEmpty()) {
+                    if (result.data.data.isNotEmpty()) {
                         // Tampilkan data di RecyclerView
-                        adapter = FranchiseAdapter(result.data.first().data)
+                        val allFranchises = result.data.data
+                        Log.d("TAG", "loadData: $allFranchises")
+                        adapter = FranchiseAdapter(allFranchises)
                         binding.rvListStory.adapter = adapter
                     } else {
                         // Tampilkan pesan jika tidak ada data
-                        binding.tvNoData.visibility = View.VISIBLE
+//                        binding.tvNoData.visibility = View.VISIBLE
                     }
                 }
                 is Result.Error -> {
@@ -98,5 +86,6 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
 
 }

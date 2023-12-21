@@ -1,6 +1,7 @@
 package com.aryasurya.franchiso.ui.home
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +22,14 @@ class FranchiseAdapter(private val franchiseList: List<DataItem3>) :
             binding.tvCategoryFranchise.text = franchiseData.category
             binding.tvDescStory.text = franchiseData.description
 
+            Log.d("Gambarran", "bind: ${franchiseData.gallery.firstOrNull()?.image} ")
             // Tambahkan logika untuk menampilkan gambar jika ada
             // franchiseData.images berisi URI gambar yang diunggah ke Firebase Storage
             // Misalnya:
-             Glide.with(binding.root.context).load(franchiseData.gallery.firstOrNull()).into(binding.ivFranchise)
+             Glide.with(binding.root.context).load(franchiseData.gallery.first().image).into(binding.ivFranchise)
+//            Glide.with(binding.ivFranchise.context)
+//                .load(franchiseData.gallery.firstOrNull()) // Ganti dengan properti yang sesuai dari galeri
+//                .into(binding.ivFranchise)
 
         }
     }

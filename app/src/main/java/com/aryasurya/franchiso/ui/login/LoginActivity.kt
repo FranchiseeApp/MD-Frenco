@@ -8,18 +8,19 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.aryasurya.franchiso.MainActivity
 import com.aryasurya.franchiso.R
 import com.aryasurya.franchiso.ViewModelFactory
 import com.aryasurya.franchiso.data.Result
 import com.aryasurya.franchiso.data.pref.UserModel
 import com.aryasurya.franchiso.databinding.ActivityLoginBinding
+import com.aryasurya.franchiso.ui.MainActivity
 import com.aryasurya.franchiso.ui.register.RegisterActivity
 import com.aryasurya.franchiso.utils.isInternetAvailable
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+
 
 
     private val viewModel by viewModels<LoginViewModel> {
@@ -35,6 +36,13 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
 
+        viewModel.getSession().observe(this) { user ->
+            if (user.isLogin) {
+                Log.d("userId", "userId: $user")
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+            Log.d("userId", "userId: $user")
+        }
 
         viewModel.loginResult.observe(this) { result ->
             when(result) {
@@ -49,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
                     binding.overlayLoading.visibility = View.GONE
                     window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                     result.data.data.apply {
+                        Log.d("userIdSave", "saveSession: $name, $token")
                         viewModel.saveSession(UserModel(id, name, email, token, role, "", "", ""))
                     }
 

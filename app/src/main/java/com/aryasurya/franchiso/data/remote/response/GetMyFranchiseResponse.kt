@@ -53,10 +53,22 @@ data class DataItem3(
 	val franchiseType: List<FranchiseTypeItem3>,
 
 	@field:SerializedName("gallery")
-	val gallery: List<Any>,
+	val gallery: List<GalleryItem2>,
 
 	@field:SerializedName("whatsapp_number")
 	val whatsappNumber: String
+)
+
+data class GalleryItem2(
+
+	@field:SerializedName("image")
+	val image: String,
+
+	@field:SerializedName("franchise_id")
+	val franchiseId: Int,
+
+	@field:SerializedName("id")
+	val id: Int
 )
 
 data class Type(

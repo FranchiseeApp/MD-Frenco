@@ -53,6 +53,8 @@ interface ApiService {
     ): UploadPhotoResponse
 
     @GET("my_franchises")
-    suspend fun getMyFranchises(): List<GetMyFranchiseResponse>
+    suspend fun getMyFranchises(
+        @Header("Authorization") authorization: String,
+    ): GetMyFranchiseResponse
 
 }

@@ -43,6 +43,7 @@ class FranchiseRepository constructor(
         val token = userPreference.getSession().first().token
         return try {
             apiService.createFranchise(token, franchiseRequest)
+//            apiService.createFranchise(franchiseRequest)
         } catch (e: Exception) {
             throw Exception("Failed to create franchise: ${e.message}")
         }
@@ -51,21 +52,25 @@ class FranchiseRepository constructor(
     suspend fun uploadImages(id: String, imageParts: List<MultipartBody.Part>): UploadPhotoResponse {
         val token = userPreference.getSession().first().token
         return try {
+//            apiService.uploadImages( id, imageParts)
             apiService.uploadImages(token, id, imageParts)
         } catch (e: Exception) {
             throw Exception(e.message ?: "An error occurred")
         }
     }
 
-    fun getMyFranchise(): LiveData<Result<List<GetMyFranchiseResponse>>> = liveData {
+    fun getMyFranchise(): LiveData<Result<GetMyFranchiseResponse>> = liveData {
         emit(Result.Loading)
+        val token = userPreference.getSession().first().token
         try {
-            val response = apiService.getMyFranchises()
+            val response = apiService.getMyFranchises(token)
             emit(Result.Success(response))
         } catch (e: Exception) {
             emit(Result.Error(e.message ?: "An error occurred"))
         }
     }
+
+
 
 //    suspend fun uploadImages(id: String, imageParts: List<MultipartBody.Part>): Flow<Result<UploadPhotoResponse>> = flow {
 //        emit(Result.Loading)

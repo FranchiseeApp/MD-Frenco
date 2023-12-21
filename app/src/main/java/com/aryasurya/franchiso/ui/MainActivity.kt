@@ -1,4 +1,4 @@
-package com.aryasurya.franchiso
+package com.aryasurya.franchiso.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.aryasurya.franchiso.R
 import com.aryasurya.franchiso.databinding.ActivityMainBinding
 import com.aryasurya.franchiso.ui.addfranchise.AddFranchiseActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView

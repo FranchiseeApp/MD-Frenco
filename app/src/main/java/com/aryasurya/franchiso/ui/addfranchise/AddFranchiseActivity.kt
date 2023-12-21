@@ -213,7 +213,7 @@ class AddFranchiseActivity : AppCompatActivity() {
         return File(filePath ?: "")
     }
     private fun convertFileToMultipart(file: File): MultipartBody.Part {
-        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
         return MultipartBody.Part.createFormData("gallery", file.name, requestFile)
     }
 
